@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import styled from 'styled-components'
 import { Link } from "react-router-dom";
-import backgroundImg from "../assets/educational-bg.jpg"
+import backgroundImg from "../../assets/educational-bg.jpg"
 import { useForm } from "react-hook-form";
-import LabelError from "./LabelErrorMessage";
-import FormHooks from "./FormHooks";
-//import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import LabelError from "../LabelErrorMessage";
+import FormHooks from "../FormHooks";
 
 const MainContainerInscription = styled.div`
   display: flex;

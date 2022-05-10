@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components'
-import Button from "../Button";
+import Button from "../Button/Index.js";
 import { useForm } from "react-hook-form";
 import LabelError from "../LabelErrorMessage";
 
