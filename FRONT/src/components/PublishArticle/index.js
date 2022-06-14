@@ -1,11 +1,12 @@
 import React, {useState} from "react";
+import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 import TextArea from "./TextArea";
 import Button from "../Button/Index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import backgroundImg from "../../assets/educational-bg.jpg"
-import { featureNotAvailableYet } from "../../utils/functions"
+import { onInsertArticleToDb } from "../../utils/functions"
 
 const MainContainerPublicationArticle = styled.div`
   display: flex;
@@ -37,10 +38,27 @@ const HidePublicationContainer = styled.div`
 const PublishArticle = () => {
 
   const [showPublicationContainer, setShowPublicationContainer] = useState(true)
+  const [articleText, setArticleText] = useState("")
 
   const hidePublicationContainer = () => {
     setShowPublicationContainer(false)
   }
+
+  const articleContent = (e) => {
+    const textAreaContent = e.target.value
+    setArticleText(textAreaContent)
+  }
+
+  const postArticle = () => {
+    const dataToInsert = {
+      id: uuidv4(),
+      text: articleText,
+    }
+    onInsertArticleToDb(dataToInsert)
+    setArticleText("")
+  }
+  
+  
    
 
   return (
@@ -53,6 +71,9 @@ const PublishArticle = () => {
             placeholder={"Vous voulez plublier un article vous aussi ?"}
             rows={20}
             cols={100}
+            articleContent={articleContent}
+            name={"TextArticleContent"}
+            value={articleText}
           />
           <PublicationButtonContainer>
             <Button 
@@ -63,7 +84,7 @@ const PublishArticle = () => {
               hideBorder={true}
               height={"40px"}
               width={"140px"}
-              onClick={featureNotAvailableYet}
+              onClick={postArticle}
             />
           </PublicationButtonContainer>
         </PublicationArticleContainer>

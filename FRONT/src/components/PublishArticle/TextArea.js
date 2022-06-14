@@ -26,6 +26,7 @@ const TextArea = ({
   placeholder,
   rows,
   cols,
+  articleContent,
 }) => {
   
 
@@ -34,6 +35,7 @@ const TextArea = ({
       placeholder={placeholder}
       rows={rows}
       cols={cols}
+      onChange={articleContent}
     />
   )
 }
