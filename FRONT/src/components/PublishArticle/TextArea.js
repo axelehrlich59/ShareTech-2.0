@@ -27,6 +27,7 @@ const TextArea = ({
   rows,
   cols,
   articleContent,
+  articleText,
 }) => {
   
 
@@ -36,6 +37,7 @@ const TextArea = ({
       rows={rows}
       cols={cols}
       onChange={articleContent}
+      value={articleText}
     />
   )
 }
