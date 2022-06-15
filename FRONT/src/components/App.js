@@ -6,6 +6,7 @@ import Connection from "../components/Connection/index.js";
 import HomePage from "./HomePage/Index.js";
 import PublishArticle from "./PublishArticle/index.js";
 import styled from 'styled-components'
+import backgroundImg from "../assets/educational-bg.jpg"
 import '../index.css'
 import {
   BrowserRouter as Router,
@@ -23,6 +24,7 @@ const MainContainer = styled.div`
   @media screen and (max-width: 720px) {
     width: 100%;
   }
+  background: url(${backgroundImg});
 `
 
 function App() {

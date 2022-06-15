@@ -9,7 +9,7 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: black;
   &:focus, &:hover, &:visited, &:link, &:active {
     text-decoration: none;
   }
@@ -26,7 +26,6 @@ const NavbarTop = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 8%;
-  background-color: #292D3E;
   font-family: 'DM Sans';
   @media screen and (max-width: 720px) {
     width: 100%;
@@ -38,7 +37,7 @@ const SectionContent = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  color: white;
+  color: black;
   font-size: 19px;
   @media (min-width: 768px) and (max-width: 1024px) {
     width: 100%;  
@@ -67,7 +66,7 @@ const BurgerIcon = styled.div`
   @media screen and (max-width: 720px) {
     display: flex;
     align-items: center;
-    color: white;
+    color: black;
     font-size: 25px;
     width: 10%;
   }
@@ -77,7 +76,6 @@ const BurgerMenuContainer = styled.div`
     display: flex;
     flex-direction: column;
     top: 0;
-    position: sticky;
     height: 25%;
     width: 100%;
     transition: 0.5s;
@@ -85,14 +83,13 @@ const BurgerMenuContainer = styled.div`
 `
 const BurgerMenuItems = styled.div`
   @media screen and (max-width: 720px) {  
-    background-color: #292D3E;
-    color: white;
+    color: black;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 35%;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     font-family: 'DM Sans';
   }
@@ -115,7 +112,7 @@ const Img = styled.img`
   }
 `
 const TextLogo = styled.div`
-  color: white;
+  color: black;
   font-size: 1.6rem;
   font-weight: bold;
   margin-left: 10px;
@@ -160,14 +157,11 @@ const Navbar = ({
             <StyledLinkButton to="/Connexion">
               {location.pathname !== "/Connexion" && <Button
                 text={"Connexion"}
-                backgroundColor={"#292D3E"}
-                textColor={"#FFFFFF"}
-                isHoverActive={true}
-                hoverColorText={"black"}
-                IsHoverBackgroundWhite={true}
-                borderColor={"#FFFFFF"}
-                height={"40px"}
-                width={"140px"}
+                backgroundColor={"#FFFFFF"}
+                textColor={"black"}
+                height={"35px"}
+                width={"120px"}
+                hideBorder={true}
               />}
             </StyledLinkButton>
             <StyledLinkButton to="/Inscription">
@@ -175,12 +169,10 @@ const Navbar = ({
                 text={"Inscription"}
                 backgroundColor={"#292D3E"}
                 textColor={"#FFFFFF"}
-                isHoverActive={true}
-                hoverColorText={"black"}
-                IsHoverBackgroundWhite={true}
-                borderColor={"#FFFFFF"}
-                height={"40px"}
-                width={"140px"}
+                hideBorder={true}
+  
+                height={"35px"}
+                width={"120px"}
               />
             </StyledLinkButton>
           </NavItemsContainer>

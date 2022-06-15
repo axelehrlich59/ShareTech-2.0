@@ -15,9 +15,11 @@ const ContainerArticle = styled.div`
   @media screen and (max-width: 720px) {
     width: 280px;
     justify-content: center;
+    flex-direction: column;
   }
   @media (min-width: 720px) and (max-width: 1024px) {
-    width: 500px;
+    width: 600px;
+    height: 800px;
   }
 `
 const ContainerPictureArticle = styled.div`
@@ -30,9 +32,10 @@ const ContainerPictureArticle = styled.div`
   border-bottom-left-radius: 15px;
   @media screen and (max-width: 720px) {
     width: 280px;
+    height: 200px;
   }
   @media (min-width: 768px) and (max-width: 1024px) {
-    width: 90%;
+    width: 50%;
   }
 `
 const ContainerProfilElements = styled.div`
@@ -54,6 +57,16 @@ const ContainerTextArticle = styled.div`
   padding: 10px;
   font-size: 18px;
   font-weight: lighter;
+  @media screen and (max-width: 720px) {
+    width: 260px;
+    font-size: 14px;
+    overflow: auto;
+    text-overflow: ellipsis;
+  }
+  @media (min-width: 768px) and (max-width: 1024px) {
+    overflow: auto;
+    height: 735px;
+  }
 `
 const Img = styled.img`
   width: 120px;
@@ -68,6 +81,11 @@ const ContainerCrud = styled.div`
   width: 80px;
   height: 70px;
   margin-top: 20px;
+  @media screen and (max-width: 720px) {
+    width: 265px;
+    flex-direction: row;
+    justify-content: center;
+  }
 `
 const ContainerIconTrash = styled.div`
   display: flex;
