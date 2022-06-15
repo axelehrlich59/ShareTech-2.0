@@ -57,6 +57,24 @@ router.post('/stored', (req, res) => {
   console.log('Article crée !')
 });
 
+router.post('/delete/:id', (req, res) => {
+  try {
+    db.collection('articles').deleteOne({_id: req.params.id}).then(
+      () => {
+        res.status(200).json({
+          message: 'Deleted!'
+        });
+      }
+    )
+  } catch(err) {
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  }
+});
+
 
 router.get('/articles', cors(), function(req, res) {
   var query = req.params.query;
@@ -66,11 +84,11 @@ router.get('/articles', cors(), function(req, res) {
   }, function(err, result) {
       if (err) throw err;
       if (result) {
-          res.json(result)
+        res.json(result)
       } else {
           res.send(JSON.stringify({
-              error : 'Error'
-          }))
+            error : 'Error'
+        }))
       }
   })
 })

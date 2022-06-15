@@ -52,11 +52,26 @@ const ContainerUserName = styled.div`
 `
 const ContainerTextArticle = styled.div`
   display: flex;
-  height: 630px;
-  width: 700px;
-  padding: 10px;
+  height: 600px;
+  width: 720px;
+  padding: 15px;
   font-size: 18px;
   font-weight: lighter;
+  overflow: auto;
+  margin-top: 10px;
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 15px;
+    background-color: #aaa;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
   @media screen and (max-width: 720px) {
     width: 260px;
     font-size: 14px;
