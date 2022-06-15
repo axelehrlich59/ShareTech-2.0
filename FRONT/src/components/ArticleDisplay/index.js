@@ -69,9 +69,10 @@ const ContainerTextArticle = styled.div`
   }
 `
 const Img = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
+  margin-top: 10px;
 `
 const ContainerCrud = styled.div`
   display: flex;
