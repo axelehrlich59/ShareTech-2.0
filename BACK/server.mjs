@@ -5,6 +5,7 @@ import path from 'path';
 import cors from "cors"
 
 const db = mongoose.connection;
+var Schema = mongoose.Schema;
 const app = express();
 const __dirname = path.resolve();
 
@@ -27,6 +28,15 @@ app.listen(port, () => {
   console.log(`App is running on port ${port}`)
 })
 
+var schemaArticle = new Schema({
+  id: String,
+  text: String,
+}, {
+  collection: 'articles'
+});
+
+var Model = mongoose.model('Model', schemaArticle)
+
 
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
@@ -46,3 +56,21 @@ router.post('/stored', (req, res) => {
   }
   console.log('Article crée !')
 });
+
+
+router.get('/articles', cors(), function(req, res) {
+  var query = req.params.query;
+
+  Model.find({
+      'request': query
+  }, function(err, result) {
+      if (err) throw err;
+      if (result) {
+          res.json(result)
+      } else {
+          res.send(JSON.stringify({
+              error : 'Error'
+          }))
+      }
+  })
+})
