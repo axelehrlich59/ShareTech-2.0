@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components'
-import AvatarImg from "../../assets/img_avatar3.png"
+import TokyoNight from "../../assets/tokyoByNight.jpg"
 import ProfilElement from "./ItemProfile";
 import Button from "../Button/Index";
 import backgroundImg from "../../assets/educational-bg.jpg"
@@ -88,7 +88,7 @@ const Profil = () => {
     <MainContainerProfile>
       <ContainerProfil>
         <ContainerProfilPicture>
-          <ProfilPicture src={AvatarImg}/>
+          <ProfilPicture src={TokyoNight}/>
         </ContainerProfilPicture>
         <ContainerProfileName>Admin</ContainerProfileName>
         <ContainerProfileElements>
