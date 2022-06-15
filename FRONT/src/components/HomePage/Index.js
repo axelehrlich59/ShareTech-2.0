@@ -12,7 +12,6 @@ const MainContainerArticlesPublished = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  border-bottom: 2.5px solid black;
   overflow: auto;
   background: url(${backgroundImg});
 `
