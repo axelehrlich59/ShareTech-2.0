@@ -75,7 +75,6 @@ const PublishArticle = () => {
   const postArticle = () => {
     
     const dataToInsert = {
-      id: uuidv4(),
       text: articleText,
     }
     onInsertArticleToDb(dataToInsert)

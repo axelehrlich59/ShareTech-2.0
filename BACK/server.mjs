@@ -37,6 +37,9 @@ var schemaArticle = new Schema({
 
 var Model = mongoose.model('Model', schemaArticle)
 
+const DeleteModel = mongoose.model('Article', {
+  text: { type: String }
+})
 
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
@@ -57,24 +60,22 @@ router.post('/stored', (req, res) => {
   console.log('Article crée !')
 });
 
-router.post('/delete/:id', (req, res) => {
-  try {
-    db.collection('articles').deleteOne({_id: req.params.id}).then(
-      () => {
-        res.status(200).json({
-          message: 'Deleted!'
-        });
-      }
-    )
-  } catch(err) {
-    (error) => {
-      res.status(400).json({
-        error: error
-      });
-    }
-  }
-});
+router.delete('/delete/:id', (req, res) => {
+  var idToRemove = String(req.params.id);
+  
+  DeleteModel.findByIdAndDelete(idToRemove, (err, doc) => {
+      if (err) return res.status(500).json(err);
 
+      if (doc === null) {
+        res.status(404).json({ message: 'Article inconnu' })
+      }
+      const response = {
+        message: "Article is deleted to db",
+        id: idToRemove
+      };
+      return res.status(200).send(response);
+  });
+});
 
 router.get('/articles', cors(), function(req, res) {
   var query = req.params.query;

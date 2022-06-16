@@ -146,6 +146,8 @@ const ArticleDisplay = ({
   username,
   profilePicture,
   text,
+  onDeleteArticle,
+  id,
 }) => {
 
   return (
@@ -161,7 +163,7 @@ const ArticleDisplay = ({
           {text}
         </ContainerTextArticle>
         <ContainerCrud>
-          <ContainerIconTrash onClick={featureNotAvailableYet}>
+          <ContainerIconTrash onClick={() => onDeleteArticle(id)}>
             <IconTrash icon={faTrash}/>
           </ContainerIconTrash>
           <ContainerIconEdit onClick={featureNotAvailableYet}>
