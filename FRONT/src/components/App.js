@@ -14,6 +14,7 @@ import {
   Routes,
 } from "react-router-dom";
 import Inscription from "./Inscription/Index.js";
+import UpdateArticle from "./UpdateArticle/index.js";
 
 
 const MainContainer = styled.div`
@@ -40,6 +41,7 @@ function App() {
             <Route path="/Profil" element={<Profil />} />
             <Route path="/Connexion" element={<Connection />} />
             <Route path="/Inscription" element={<Inscription />} />
+            <Route path="/ArticleUpdate/:id" element={<UpdateArticle />} />
           </Routes>
         </Router>
       </MainContainer>

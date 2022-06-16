@@ -148,6 +148,7 @@ const ArticleDisplay = ({
   text,
   onDeleteArticle,
   id,
+  onModificationArticlePage,
 }) => {
 
   return (
@@ -166,7 +167,7 @@ const ArticleDisplay = ({
           <ContainerIconTrash onClick={() => onDeleteArticle(id)}>
             <IconTrash icon={faTrash}/>
           </ContainerIconTrash>
-          <ContainerIconEdit onClick={featureNotAvailableYet}>
+          <ContainerIconEdit onClick={() => onModificationArticlePage(id)}>
             <IconEdit icon={faEdit}/>
           </ContainerIconEdit>
         </ContainerCrud>
