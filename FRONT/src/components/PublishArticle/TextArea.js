@@ -5,6 +5,7 @@ const PublicationArticleTextArea = styled.textarea`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 5px;
   border: none;
+  outline: none;
   font-size: 1.2rem;
   font-weight: light;
   font-family: 'DM Sans';

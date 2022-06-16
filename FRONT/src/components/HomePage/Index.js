@@ -85,8 +85,8 @@ const HomePage = () => {
     location.reload()
   }
 
-  const onModificationArticlePage = (id) => {
-    navigate(`/ArticleUpdate/${id}`, {state:{ id: id }})
+  const onModificationArticlePage = (id, text) => {
+    navigate(`/ArticleUpdate/${id}`, {state:{ id: id, text: text}})
   }
 
   return (
