@@ -41,7 +41,9 @@ const ContainerUpdateButton = styled.div`
 `
 
 
-const UpdateArticle = () => {
+const UpdateArticle = ({
+  setShowAlertSuccess,
+}) => {
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -50,6 +52,15 @@ const UpdateArticle = () => {
   
   const onChangeArticleValue = (e) => {
     setOriginalArticle(e.target.value)
+  }
+
+  const updateArticleSuccessPromise = async () => {
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("Article modifié !"), 1000)
+    });
+  
+    setShowAlertSuccess(true)
+    setTimeout(() => setShowAlertSuccess(false), 17000)
   }
 
   const onUpdateArticle = (id) => {
@@ -66,6 +77,7 @@ const UpdateArticle = () => {
       },
     }).then(res => {
       navigate("/", {replace: true})
+      updateArticleSuccessPromise()
       return res.json()
     })
     .then(data => {

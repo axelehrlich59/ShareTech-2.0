@@ -73,9 +73,10 @@ const ContainerTextArticle = styled.div`
     border-radius: 10px;
   }
   @media screen and (max-width: 720px) {
-    width: 260px;
+    width: 235px;
     font-size: 14px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
     text-overflow: ellipsis;
   }
   @media (min-width: 768px) and (max-width: 1024px) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Navbar from "./Navbar/index.js"
 import About from "../components/About/index.js";
 import Profil from "./Profil/Index.js";
@@ -29,19 +29,24 @@ const MainContainer = styled.div`
 `
 
 function App() {
+  const [showAlertSuccess, setShowAlertSuccess] = useState(false)
   return (
     <>
       <MainContainer>
         <Router>
           <Navbar />
           <Routes>
-            <Route path="/" element={<HomePage />} exact/>
+            <Route path="/" element={<HomePage 
+              showAlertSuccess={showAlertSuccess} 
+              setShowAlertSuccess={setShowAlertSuccess}
+            />} exact
+            />
             <Route path="/AboutUs" element={<About />} />
             <Route path="/Post" element={<PublishArticle />} />
             <Route path="/Profil" element={<Profil />} />
             <Route path="/Connexion" element={<Connection />} />
             <Route path="/Inscription" element={<Inscription />} />
-            <Route path="/ArticleUpdate/:id" element={<UpdateArticle />} />
+            <Route path="/ArticleUpdate/:id" element={<UpdateArticle setShowAlertSuccess={setShowAlertSuccess} />}/> 
           </Routes>
         </Router>
       </MainContainer>
