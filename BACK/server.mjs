@@ -37,7 +37,7 @@ var schemaArticle = new Schema({
 
 var Model = mongoose.model('Model', schemaArticle)
 
-const DeleteModel = mongoose.model('Article', {
+const ArticleModel = mongoose.model('Article', {
   text: { type: String }
 })
 
@@ -60,10 +60,26 @@ router.post('/stored', (req, res) => {
   console.log('Article crée !')
 });
 
+app.put('/update/:id', (req, res) => {
+  ArticleModel.updateOne({_id: req.params.id}, {$set:{text: req.body.text}}).then(
+    () => {
+      res.status(201).json({
+        message: 'Thing updated successfully!'
+      });
+    }
+  ).catch(
+    (error) => {
+      res.status(400).json({
+        error: error
+      });
+    }
+  );
+});
+
 router.delete('/delete/:id', (req, res) => {
-  var idToRemove = String(req.params.id);
+  var articleId = String(req.params.id);
   
-  DeleteModel.findByIdAndDelete(idToRemove, (err, doc) => {
+  ArticleModel.findByIdAndDelete(articleId, (err, doc) => {
       if (err) return res.status(500).json(err);
 
       if (doc === null) {
@@ -71,7 +87,7 @@ router.delete('/delete/:id', (req, res) => {
       }
       const response = {
         message: "Article is deleted to db",
-        id: idToRemove
+        id: articleId
       };
       return res.status(200).send(response);
   });

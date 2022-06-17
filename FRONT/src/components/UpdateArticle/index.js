@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components'
 import backgroundImg from "../../assets/educational-bg.jpg"
-import { useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import Button from "../Button/Index";
 
 const MainContainerModificationArticle = styled.div`
@@ -44,10 +44,35 @@ const ContainerUpdateButton = styled.div`
 const UpdateArticle = () => {
 
   const location = useLocation()
+  const navigate = useNavigate()
   const [originalArticle, setOriginalArticle] = useState(location.state.text)
-
+  const articleId = location.state.id
+  
   const onChangeArticleValue = (e) => {
     setOriginalArticle(e.target.value)
+  }
+
+  const onUpdateArticle = (id) => {
+    const dataToSend = {
+      text: originalArticle
+    }
+    fetch(`http://localhost:8000/update/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(dataToSend),
+      headers: {
+        'Content-Type': 'application/json',
+        "Access-Control-Allow-Origin" : "*", 
+        "Access-Control-Allow-Credentials" : true,
+      },
+    }).then(res => {
+      navigate("/", {replace: true})
+      return res.json()
+    })
+    .then(data => {
+      console.log(data)
+    }).catch(err => {
+      console.log("Error Reading data " + err);
+    });
   }
 
   return (
@@ -68,6 +93,7 @@ const UpdateArticle = () => {
             height={"40px"}
             width={"140px"}
             hideBorder={true}
+            onClick={() => {onUpdateArticle(articleId)}}
           />
         </ContainerUpdateButton>
       </MainContainerModificationArticle>
