@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   ContainerAlerteUpdateSuccess,
@@ -14,12 +14,11 @@ const CardSuccess = ({
   icon,
   text,
   onCloseAlert,
-  isOpen,
 }) => {
 
 
   return (
-    <ContainerAlerteUpdateSuccess isOpen={isOpen}>
+    <ContainerAlerteUpdateSuccess>
       <AlerteUpdateSuccess>
         <ContainerIcon icon={icon}>
           {icon}
