@@ -1,22 +1,21 @@
-import express from "express";
-import mongoose from "mongoose";
-import "./connect.mjs"
-import path from 'path';
-import cors from "cors"
-
-const db = mongoose.connection;
-var Schema = mongoose.Schema;
+console.clear()
+const express = require("express")
 const app = express();
-const __dirname = path.resolve();
-
-const port = 8000
-const router = express.Router()
+const cors = require("cors")
 
 const corsOptions = {
-   origin:'*', 
-   credentials:true,            //access-control-allow-credentials:true
-   optionSuccessStatus:200,
+  origin: "http://localhost:4200", 
+  credentials:true,
+  optionSuccessStatus:200,
 }
+
+const mongoose = require("mongoose")
+
+const router = express.Router()
+const db = mongoose.connection;
+var Schema = mongoose.Schema;
+
+const port = 8000
 
 app.use(cors(corsOptions))
 
@@ -24,9 +23,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 app.use(router)
 
-app.listen(port, () => {
-  console.log(`App is running on port ${port}`)
-})
 
 var schemaArticle = new Schema({
   id: String,
@@ -41,6 +37,17 @@ const ArticleModel = mongoose.model('Article', {
   text: { type: String }
 })
 
+router.post('/stored', (req, res) => {
+  try {
+    db.collection('articles').insertOne(req.body, (err, data) => {
+      if(err) console.log(err);
+      return res.status(200).send("SUCCESS")
+  })} catch(err) {
+    console.log(err)
+    return res.status(500).send()
+  }
+});
+
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
 });
@@ -49,18 +56,7 @@ router.get('/success', function (req, res) {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
 })
 
-router.post('/stored', (req, res) => {
-  try {
-    db.collection('articles').insertOne(req.body, (err, data) => {
-      if(err) return console.log(err);
-      res.redirect('/')
-  })} catch(err) {
-    console.log('err ===== ', err)
-  }
-  console.log('Article crée !')
-});
-
-app.put('/update/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
   ArticleModel.updateOne({_id: req.params.id}, {$set:{text: req.body.text}}).then(
     () => {
       res.status(201).json({
@@ -83,7 +79,7 @@ router.delete('/delete/:id', (req, res) => {
       if (err) return res.status(500).json(err);
 
       if (doc === null) {
-        res.status(404).json({ message: 'Article inconnu' })
+        return res.status(404).json({ message: 'Article inconnu' })
       }
       const response = {
         message: "Article is deleted to db",
@@ -93,15 +89,12 @@ router.delete('/delete/:id', (req, res) => {
   });
 });
 
-router.get('/articles', cors(), function(req, res) {
-  var query = req.params.query;
-
-  Model.find({
-      'request': query
-  }, function(err, result) {
+router.get('/articles', cors(corsOptions), function(req, res) {
+  Model.find({}, function(err, result) {
       if (err) throw err;
       if (result) {
-        res.json(result)
+        // res.json(result)
+        res.send(result)
       } else {
           res.send(JSON.stringify({
             error : 'Error'
@@ -109,3 +102,9 @@ router.get('/articles', cors(), function(req, res) {
       }
   })
 })
+
+app.listen(port, () => {
+  console.log(`App is running on port ${port}`)
+  })
+
+module.exports = router

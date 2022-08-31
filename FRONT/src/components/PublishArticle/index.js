@@ -3,10 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components'
 import TextArea from "./TextArea";
 import Button from "../Button/Index";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import backgroundImg from "../../assets/educational-bg.jpg"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 
 const MainContainerPublicationArticle = styled.div`
   display: flex;
@@ -52,36 +51,56 @@ const PublishArticle = () => {
 
   const onInsertArticleToDb = (dataToInsert) => {
     if(articleText === "") return;
-    return fetch('http://localhost:8000/stored', {
-      method: 'POST',
-      body: JSON.stringify(dataToInsert),
-      headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin" : "*", 
-        "Access-Control-Allow-Credentials" : true,
-      },
-    }) 
-    .then(res => {
-      navigate("/", {replace: true})
-      return res.json()
-    })
-    .then(data => {
-      console.log(data)
-    }).catch(err => {
-      console.log("Error Reading data " + err);
-    });
+    try {
+      axios.post('http://localhost:8000/stored', dataToInsert, {
+      withCredentials: true
+      })
+      .then(() => navigate("/", {replace: true}))
+    } catch(error) {
+      console.log(error)
+    }
+    
+    // try {
+    //   console.log('options ===== ', options)
+    //   let request = fetch('http://localhost:8000/stored', options)
+    //   .then(res => {
+    //     
+    //     return res.json()
+    //   })
+    //   .then(data => console.log(data))
+    //   .catch(err => console.log(err))
+    // } catch(error) {
+    //   console.error(error)
+    // }
+    // await fetch('http://localhost:8000/stored', {
+    //   method: 'POST',
+    //   body: JSON.stringify(dataToInsert),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     "Access-Control-Allow-Origin" : "*", 
+    //     "Access-Control-Allow-Credentials" : true,
+    //   },
+    // }) 
+    // .then(res => {
+    //   console.log("ok res")
+    //   navigate("/", {replace: true})
+    //   return res.json()
+    // })
+    // .then(data => {
+    //   console.log("ok data")
+    //   console.log(data)
+    // }).catch(err => {
+    //   console.log("Error Reading data " + err);
+    // });
   }
 
   const postArticle = () => {
-    
     const dataToInsert = {
       text: articleText,
     }
     onInsertArticleToDb(dataToInsert)
     setArticleText("")
   }
-
-
   
    
 
