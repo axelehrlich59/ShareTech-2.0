@@ -75,8 +75,9 @@ const HomePage = ({
   const [articles, setArticles] = useState([])
   const navigate = useNavigate()
 
+  const firstArticleText = "When React came out, virtual DOM got everyone talking. It was a breakthrough and, like any good piece of engineering, it was built with carefully considered tradeoffs.The concept was so simple and powerful at the same time that it became the way people introduce and differentiate React from other front-end frameworks and libraries. “React is a view layer that uses virtual DOM for performance.” Another motto you can often hear is “React can be used as the V in MVC.” At the time, downplaying React’s role in application architecture was intentional because React already had too many “seemingly bad” ideas to risk alienating people by adding some more.In fact, React is not at all about virtual DOM. It’s an implementation detail that made React famous, but it overshadowed other concepts that are less shiny but more important in the long run."
+  const secondArticleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec posuere elit velit, in malesuada mauris pretium aliquam. Proin vestibulum elit metus, eu pellentesque justo pellentesque et. Curabitur elementum, sapien ac scelerisque bibendum, nulla odio faucibus nibh, eu suscipit nulla est vel enim. Curabitur viverra massa sit amet justo euismod, in placerat metus ultrices. Nullam metus dui, fringilla eu porta id, condimentum nec leo. Integer dolor ipsum, imperdiet quis ultricies quis, rhoncus ut lacus. Suspendisse sed lacus ut lorem fermentum mattis. Sed cursus eros et mauris maximus commodo. Fusce vel vestibulum nunc, sit amet ornare tellus. Curabitur sagittis, dui in eleifend volutpat, purus velit vestibulum leo, bibendum vulputate nunc elit vitae neque.Nullam fermentum metus sit amet risus malesuada bibendum. Integer et felis enim. Duis molestie, lorem sit amet fermentum suscipit, nisl dui hendrerit arcu, at gravida dolor lectus id ligula. Aliquam mi erat, commodo eu nulla id, bibendum condimentum justo. In felis mi, sollicitudin eu tortor non, pulvinar ullamcorper leo. Proin blandit vitae justo ut lacinia. Vestibulum in convallis neque, quis pulvinar augue. Vivamus a turpis nisl. Cras nec nibh fermentum, dignissim arcu et, ultrices nisi. Phasellus dapibus lorem vel erat ornare ultricies. Etiam ornare justo nisi, id luctus neque consequat nec. Pellentesque pulvinar quam sit amet lectus laoreet pharetra. Nullam lobortis sodales ex, vel volutpat purus porttitor nec. Nunc eget eros nec nunc dapibus laoreet sit amet et risus. In aliquet odio a nunc molestie, vitae aliquet mi hendrerit. Phasellus imperdiet tristique velit.Praesent at vestibulum risus. Sed vel porttitor lectus. Vestibulum molestie dolor enim, ut interdum neque euismod eu. Morbi consectetur vehicula est a imperdiet. Integer tristique urna mauris, a tristique libero dictum id. In dignissim vehicula orci. Sed finibus pharetra faucibus. Proin elementum ornare cursus. Cras magna justo, facilisis quis suscipit a, tempor accumsan nunc. Nulla commodo eget mauris ut ullamcorper. Nulla finibus elementum est vitae venenatis. Etiam gravida pulvinar tincidunt. Aliquam erat volutpat. Praesent tristique finibus finibus. Nunc blandit tincidunt blandit."
 
-  const loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eget mi vehicula, pretium lacus nec, luctus elit. In non bibendum orci. Pellentesque venenatis elementum ex, vitae sodales eros tempus ac. Aliquam erat volutpat. Mauris dignissim vitae mauris vitae pulvinar. Praesent a imperdiet felis, in pellentesque urna. Fusce non elit id enim efficitur faucibus sed at magna. Integer nec nunc eu erat congue ultricies in ut leo. Suspendisse at vestibulum ipsum, in dapibus nisi. Etiam fermentum augue ipsum, sed hendrerit ante posuere ut. Morbi tortor diam, malesuada non tempor at, sodales ac velit. Curabitur a vulputate libero. Nam lacinia leo vel tempor interdum. Nam tempor consequat posuere. Donec vestibulum elementum congue. Nulla efficitur maximus bibendum. Maecenas tincidunt orci sem, ut imperdiet eros bibendum vel. Donec egestas nibh et sodales varius. Ut mi enim, consequat vel consequat sit amet, fringilla at lectus. Praesent suscipit risus odio, id vestibulum est mattis et. Nam lacinia non nulla in consectetur. Donec est odio, tempus nec interdum quis, lacinia quis velit. Maecenas malesuada nibh turpis, lobortis tristique orci aliquet a. In viverra nibh eu massa ornare consectetur. Donec leo felis, cursus nec lacinia at, luctus eu libero. Etiam feugiat sit amet magna quis tincidunt. Sed bibendum urna enim, id condimentum dui pulvinar vel. Ut tristique nisl non velit cursus auctor. Aenean commodo erat iaculis mauris rhoncus dictum. Donec sodales eros ut velit commodo vestibulum. Vivamus et purus purus. Nunc nec leo ut mauris tincidunt volutpat id quis lectus. Duis feugiat tortor ac velit volutpat, in posuere felis iaculis. Cras in urna sed metus varius sagittis id ac risus. Fusce in ligula eu magna elementum ullamcorper. Aliquam at nulla dolor. Etiam at nunc auctor, interdum leo at, ullamcorper augue. Aliquam non mi turpis. Etiam ut lectus eros. Cras arcu odio, accumsan in urna quis, vulputate molestie risus. Nulla vitae ornare massa. Pellentesque elit lorem, vehicula eget odio eget, interdum fringilla felis. Mauris vitae vulputate nunc, at vestibulum arcu. Morbi semper, est eu imperdiet semper, diam ex volutpat leo, ac tempus justo orci vitae sapien. Morbi lorem turpis, pretium id massa quis, dignissim faucibus arcu. Vestibulum ut odio a orci lobortis vestibulum eu vitae sem. Pellentesque at dictum metus, eget commodo leo. Etiam aliquam nisl elit, a accumsan lorem molestie in. Vestibulum nec turpis nisl. Sed fringilla et nisi a posuere. Proin aliquam augue non quam imperdiet, at tempus nulla finibus. Donec cursus accumsan diam, eget ullamcorper orci hendrerit ac. Vestibulum sagittis, sapien sed gravida hendrerit, mauris enim maximus quam, vitae ullamcorper orci justo eget dolor. Nullam fermentum neque velit, eu porttitor metus porttitor in. Sed enim ipsum, ultricies vitae odio ac, venenatis mattis sem."
   useEffect(() => {
     try {
       axios.get("http://localhost:8000/articles")
@@ -120,15 +121,24 @@ const HomePage = ({
         onCloseAlert={() => setShowAlertSuccess(false)}
         isOpen={true}
       />}
-      {articles.length === 0 ? <MainContainerArticlesPublished>
-        <NoArticlesContainer>
-          <AvertissementNoContent>
-            <h1>Il n'y a actuellement aucun article de disponible... </h1>
-            <FontAwesomeIconContainer icon={faFrown} />
-          </AvertissementNoContent>
-          <h1>Mais vous pouvez en ajouter un dans la section publier !</h1>
-        </NoArticlesContainer>
-      </MainContainerArticlesPublished> : 
+      {articles.length === 0 ? <>
+        <MainContainerArticlesPublished>
+          <ArticleDisplay 
+            text={firstArticleText}
+            username={"Admin"}
+            profilePicture={TokyoNight}
+            onModificationArticlePage={onModificationArticlePage}
+          />
+        </MainContainerArticlesPublished> : 
+        <MainContainerArticlesPublished>
+          <ArticleDisplay 
+            text={secondArticleText}
+            username={"Admin"}
+            profilePicture={TokyoNight}
+            onModificationArticlePage={onModificationArticlePage}
+          />
+        </MainContainerArticlesPublished>
+      </> : 
       articles.map((article, index) => (
         <MainContainerArticlesPublished key={index}>
           <ArticleDisplay 
