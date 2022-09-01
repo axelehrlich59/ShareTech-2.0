@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components'
+import propTypes from 'prop-types'
 import backgroundImg from "../../assets/educational-bg.jpg"
 import TokyoNight from "../../assets/tokyoByNight.jpg"
 import ArticleDisplay from "../ArticleDisplay";
@@ -109,10 +110,6 @@ const HomePage = ({
     navigate(`/ArticleUpdate/${id}`, {state:{ id: id, text: text}})
   }
 
-  useEffect(() => {
-    console.log('articles ===== ', articles)
-  }, [articles]);
-
   return (
     <>
       {showAlertSuccess && <CardSuccess 
@@ -127,6 +124,7 @@ const HomePage = ({
             text={firstArticleText}
             username={"Admin"}
             profilePicture={TokyoNight}
+            onDeleteArticle={() => {}}
             onModificationArticlePage={onModificationArticlePage}
           />
         </MainContainerArticlesPublished> : 
@@ -145,7 +143,6 @@ const HomePage = ({
             text={article.text}
             username={"Admin"}
             profilePicture={TokyoNight}
-            onDeleteArticle={onDeleteArticle}
             id={article._id}
             onModificationArticlePage={onModificationArticlePage}
           />
@@ -153,6 +150,16 @@ const HomePage = ({
       ))}
     </>
   )
+}
+
+HomePage.propTypes = {
+  onDeleteArticle: propTypes.func,
+  onModificationArticlePage: propTypes.func,
+}
+
+HomePage.defaultProps = {
+  onDeleteArticle: () => {},
+  onModificationArticlePage: () => {},
 }
 
 export default HomePage
