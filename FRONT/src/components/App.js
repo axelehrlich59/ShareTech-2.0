@@ -31,6 +31,8 @@ const MainContainer = styled.div`
 function App() {
   const [showAlertSuccessUpdate, setshowAlertSuccessUpdate] = useState(false)
   const [showAlertSuccessPost, setShowAlertSuccessPost] = useState(false)
+  const [showAlertSuccessDelete, setShowAlertSuccessDelete] = useState(false)
+
   return (
     <>
       <MainContainer>
@@ -42,6 +44,8 @@ function App() {
               setshowAlertSuccessUpdate={setshowAlertSuccessUpdate}
               showAlertSuccessPost={showAlertSuccessPost}
               setShowAlertSuccessPost={setShowAlertSuccessPost}
+              showAlertSuccessDelete={showAlertSuccessDelete}
+              setShowAlertSuccessDelete={setShowAlertSuccessDelete}
             />} exact
             />
             <Route path="/AboutUs" element={<About />} />

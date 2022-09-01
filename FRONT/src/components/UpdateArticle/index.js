@@ -5,6 +5,8 @@ import backgroundImg from "../../assets/educational-bg.jpg"
 import { useNavigate, useLocation } from "react-router-dom"
 import Button from "../Button/Index";
 import { promiseSuccessAlert } from "../../utils/functions";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const MainContainerModificationArticle = styled.div`
   display: flex;
@@ -34,11 +36,11 @@ const PublicationArticleTextArea = styled.textarea`
   }
   resize: none;
 ` 
-const ContainerUpdateButton = styled.div`
+const ContainerButtons = styled.div`
   display: flex;
-  width: 100%;
+  width: 20%;
   height: 15%;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 `
 
@@ -93,7 +95,17 @@ const UpdateArticle = ({
           defaultValue={originalArticle}
           onChange={onChangeArticleValue}
         />
-        <ContainerUpdateButton>
+        <ContainerButtons>
+          <Button 
+            text={"Annuler"}
+            textColor={"#FFFFFF"}
+            backgroundColor={"#FF0000"}
+            boxShadowIsActive={true}
+            height={"40px"}
+            width={"110px"}
+            hideBorder={true}
+            onClick={() => navigate("/", {replace: true})}
+          />
           <Button 
             text={"Modifier"}
             textColor={"#292D3E"}
@@ -104,7 +116,7 @@ const UpdateArticle = ({
             hideBorder={true}
             onClick={() => {onUpdateArticle(articleId)}}
           />
-        </ContainerUpdateButton>
+        </ContainerButtons>
       </MainContainerModificationArticle>
     </>
   )
