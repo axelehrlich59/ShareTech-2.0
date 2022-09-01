@@ -99,6 +99,16 @@ const PublishArticle = ({
           />
           <PublicationButtonContainer role={"ContainerButton"}>
             <Button 
+              text={"Annuler"}
+              textColor={"#FFFFFF"}
+              backgroundColor={"#FF0000"}
+              boxShadowIsActive={true}
+              height={"40px"}
+              width={"110px"}
+              hideBorder={true}
+              onClick={() => navigate("/", {replace: true})}
+            />
+            <Button 
               text={"Publier"}
               textColor={"#292D3E"}
               borderColor={"#292D3E"}
