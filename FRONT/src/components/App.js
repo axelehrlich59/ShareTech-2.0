@@ -29,7 +29,8 @@ const MainContainer = styled.div`
 `
 
 function App() {
-  const [showAlertSuccess, setShowAlertSuccess] = useState(false)
+  const [showAlertSuccessUpdate, setshowAlertSuccessUpdate] = useState(false)
+  const [showAlertSuccessPost, setShowAlertSuccessPost] = useState(false)
   return (
     <>
       <MainContainer>
@@ -37,16 +38,22 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<HomePage 
-              showAlertSuccess={showAlertSuccess} 
-              setShowAlertSuccess={setShowAlertSuccess}
+              showAlertSuccessUpdate={showAlertSuccessUpdate} 
+              setshowAlertSuccessUpdate={setshowAlertSuccessUpdate}
+              showAlertSuccessPost={showAlertSuccessPost}
+              setShowAlertSuccessPost={setShowAlertSuccessPost}
             />} exact
             />
             <Route path="/AboutUs" element={<About />} />
-            <Route path="/Post" element={<PublishArticle />} />
+            <Route path="/Post" element={<PublishArticle 
+              setShowAlertSuccessPost={setShowAlertSuccessPost}
+            />} />
             <Route path="/Profil" element={<Profil />} />
             <Route path="/Connexion" element={<Connection />} />
             <Route path="/Inscription" element={<Inscription />} />
-            <Route path="/ArticleUpdate/:id" element={<UpdateArticle setShowAlertSuccess={setShowAlertSuccess} />}/> 
+            <Route path="/ArticleUpdate/:id" element={<UpdateArticle
+              setshowAlertSuccessUpdate={setshowAlertSuccessUpdate}
+            />}/> 
           </Routes>
         </Router>
       </MainContainer>

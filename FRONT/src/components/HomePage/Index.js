@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styled from 'styled-components'
-import propTypes from 'prop-types'
 import backgroundImg from "../../assets/educational-bg.jpg"
 import TokyoNight from "../../assets/tokyoByNight.jpg"
 import ArticleDisplay from "../ArticleDisplay";
@@ -69,8 +68,10 @@ const SuccessIcon = styled(FontAwesomeIcon)`
 `
 
 const HomePage = ({
-  showAlertSuccess,
-  setShowAlertSuccess,
+  showAlertSuccessUpdate,
+  setshowAlertSuccessUpdate,
+  showAlertSuccessPost,
+  setShowAlertSuccessPost,
 }) => {
 
   const [articles, setArticles] = useState([])
@@ -112,10 +113,16 @@ const HomePage = ({
 
   return (
     <>
-      {showAlertSuccess && <CardSuccess 
+      {showAlertSuccessUpdate && <CardSuccess 
         text={"La modification de l'article a bien été prise en compte"}
         icon={<SuccessIcon icon={faSmile}/>}
-        onCloseAlert={() => setShowAlertSuccess(false)}
+        onCloseAlert={() => setshowAlertSuccessUpdate(false)}
+        isOpen={true}
+      />}
+      {showAlertSuccessPost && <CardSuccess 
+        text={"La publication de votre article s'est déroulée avec succès"}
+        icon={<SuccessIcon icon={faSmile}/>}
+        onCloseAlert={() => setShowAlertSuccessPost(false)}
         isOpen={true}
       />}
       {articles.length === 0 ? <>
@@ -124,8 +131,6 @@ const HomePage = ({
             text={firstArticleText}
             username={"Admin"}
             profilePicture={TokyoNight}
-            onDeleteArticle={() => {}}
-            onModificationArticlePage={onModificationArticlePage}
           />
         </MainContainerArticlesPublished> : 
         <MainContainerArticlesPublished>
@@ -133,7 +138,6 @@ const HomePage = ({
             text={secondArticleText}
             username={"Admin"}
             profilePicture={TokyoNight}
-            onModificationArticlePage={onModificationArticlePage}
           />
         </MainContainerArticlesPublished>
       </> : 
@@ -144,22 +148,13 @@ const HomePage = ({
             username={"Admin"}
             profilePicture={TokyoNight}
             id={article._id}
+            onDeleteArticle={onDeleteArticle}
             onModificationArticlePage={onModificationArticlePage}
           />
         </MainContainerArticlesPublished>
       ))}
     </>
   )
-}
-
-HomePage.propTypes = {
-  onDeleteArticle: propTypes.func,
-  onModificationArticlePage: propTypes.func,
-}
-
-HomePage.defaultProps = {
-  onDeleteArticle: () => {},
-  onModificationArticlePage: () => {},
 }
 
 export default HomePage

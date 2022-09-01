@@ -6,6 +6,7 @@ import Button from "../Button/Index";
 import backgroundImg from "../../assets/educational-bg.jpg"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { promiseSuccessAlert } from "../../utils/functions";
 
 const MainContainerPublicationArticle = styled.div`
   display: flex;
@@ -33,7 +34,9 @@ const HidePublicationContainer = styled.div`
 `
 
 
-const PublishArticle = () => {
+const PublishArticle = ({
+  setShowAlertSuccessPost,
+}) => {
 
   const navigate = useNavigate()
 
@@ -42,6 +45,12 @@ const PublishArticle = () => {
 
   const hidePublicationContainer = () => {
     setShowPublicationContainer(false)
+  }
+
+  const postArticleSuccessPromise = async () => {
+    promiseSuccessAlert()
+    setShowAlertSuccessPost(true)
+    setTimeout(() => setShowAlertSuccessPost(false), 10000)
   }
 
   const articleContent = (e) => {
@@ -55,43 +64,13 @@ const PublishArticle = () => {
       axios.post('http://localhost:8000/stored', dataToInsert, {
       withCredentials: true
       })
-      .then(() => navigate("/", {replace: true}))
+      .then(() => 
+        postArticleSuccessPromise(),
+        navigate("/", {replace: true}
+      ))
     } catch(error) {
       console.log(error)
     }
-    
-    // try {
-    //   console.log('options ===== ', options)
-    //   let request = fetch('http://localhost:8000/stored', options)
-    //   .then(res => {
-    //     
-    //     return res.json()
-    //   })
-    //   .then(data => console.log(data))
-    //   .catch(err => console.log(err))
-    // } catch(error) {
-    //   console.error(error)
-    // }
-    // await fetch('http://localhost:8000/stored', {
-    //   method: 'POST',
-    //   body: JSON.stringify(dataToInsert),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     "Access-Control-Allow-Origin" : "*", 
-    //     "Access-Control-Allow-Credentials" : true,
-    //   },
-    // }) 
-    // .then(res => {
-    //   console.log("ok res")
-    //   navigate("/", {replace: true})
-    //   return res.json()
-    // })
-    // .then(data => {
-    //   console.log("ok data")
-    //   console.log(data)
-    // }).catch(err => {
-    //   console.log("Error Reading data " + err);
-    // });
   }
 
   const postArticle = () => {

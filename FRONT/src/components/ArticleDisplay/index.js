@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import PublishArticle from "../PublishArticle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faE, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -175,6 +176,16 @@ const ArticleDisplay = ({
       </ContainerArticle>
     </>
   )
+}
+
+ArticleDisplay.defaultProps = {
+  onDeleteArticle: () => {},
+  onModificationArticlePage: () => {},
+}
+
+ArticleDisplay.propTypes = {
+  onDeleteArticle: PropTypes.func,
+  onModificationArticlePage: PropTypes.func,
 }
 
 export default ArticleDisplay

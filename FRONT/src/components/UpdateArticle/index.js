@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import backgroundImg from "../../assets/educational-bg.jpg"
 import { useNavigate, useLocation } from "react-router-dom"
 import Button from "../Button/Index";
+import { promiseSuccessAlert } from "../../utils/functions";
 
 const MainContainerModificationArticle = styled.div`
   display: flex;
@@ -42,7 +44,7 @@ const ContainerUpdateButton = styled.div`
 
 
 const UpdateArticle = ({
-  setShowAlertSuccess,
+  setshowAlertSuccessUpdate,
 }) => {
 
   const location = useLocation()
@@ -55,12 +57,9 @@ const UpdateArticle = ({
   }
 
   const updateArticleSuccessPromise = async () => {
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => resolve("Article modifié !"), 1000)
-    });
-  
-    setShowAlertSuccess(true)
-    setTimeout(() => setShowAlertSuccess(false), 17000)
+    promiseSuccessAlert()
+    setshowAlertSuccessUpdate(true)
+    setTimeout(() => setshowAlertSuccessUpdate(false), 10000)
   }
 
   const onUpdateArticle = (id) => {
@@ -80,9 +79,7 @@ const UpdateArticle = ({
       updateArticleSuccessPromise()
       return res.json()
     })
-    .then(data => {
-      console.log(data)
-    }).catch(err => {
+    .catch(err => {
       console.log("Error Reading data " + err);
     });
   }
@@ -112,5 +109,17 @@ const UpdateArticle = ({
     </>
   )
 }
+
+UpdateArticle.propTypes = {
+
+}
+
+UpdateArticle.defaultProps = {
+
+}
+
+
+
+
 
 export default UpdateArticle
