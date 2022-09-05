@@ -29,7 +29,8 @@ export const AlerteUpdateSuccess = styled.div`
   align-items: center;
   border-radius: 5px;
   border: 2px solid #292D3E;
-  background-color: white;
+  background-color: ${({backgroundColor}) => backgroundColor};
+  color: ${({textColor}) => textColor};
   animation-name: ${breatheAnimation};
   animation-fill-mode: both;
   animation-duration: 2s;

@@ -99,7 +99,7 @@ const PublishArticle = ({
             <Button 
               text={"Annuler"}
               textColor={"#FFFFFF"}
-              backgroundColor={"#FF0000"}
+              backgroundColor={"#F95668"}
               boxShadowIsActive={true}
               height={"40px"}
               width={"110px"}

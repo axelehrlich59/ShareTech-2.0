@@ -1,11 +1,16 @@
 import React, {useEffect, useState} from "react";
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { useForm } from "react-hook-form";
 import Button from "../Button/Index";
 import { Link } from "react-router-dom";
-import backgroundImg from "../../assets/educational-bg.jpg"
+import backgroundImg from "../../assets/educational-bg.jpg";
 import AlertCard from "../AlertCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import { faFrown, faSmile } from "@fortawesome/free-solid-svg-icons";
+import { promiseSuccessAlert } from "../../utils/functions";
+import LabelError from "../LabelErrorMessage";
 
 const MainContainerConnection = styled.div`
   display: flex;
@@ -95,29 +100,112 @@ const SuccessIcon = styled(FontAwesomeIcon)`
   margin-right: 20px;
   width: 50px;
   height: 50px;
-  color: #292D3E;
+  color: ${({color}) => color};
 `
-
 
 const Connection = ({
   showAlertSuccessUserCreated,
   setShowAlertSuccessUserCreated,
+  setShowAlertSuccessLogin,
+  showAlertFailedLogin,
+  setShowAlertFailedLogin,
 }) => {
+
+  const navigate = useNavigate()
+  const [showLabelError, setShowLabelError] = useState(true)
+  const {register, handleSubmit, formState} = useForm()
+  const {isSubmitting, errors} = formState
+
+  const [inscriptionFormValue, setInscriptionFormValue] = useState({})
+
+  const limitEmailLength = 320
+
+
+  const loginSuccessPromise = async () => {
+    promiseSuccessAlert()
+    setShowAlertSuccessLogin(true)
+    setTimeout(() => setShowAlertSuccessLogin(false), 10000)
+  }
+
+  const onSubmit = async(dataToInsert) => {
+    if(Object.keys(dataToInsert).length === "") return;
+    try {
+      axios.post('http://localhost:8000/login', dataToInsert, {
+      withCredentials: true
+    })
+      .then((res) => {
+        if(res.data.success === false) {
+          setShowAlertFailedLogin(true)
+          setTimeout(() => setShowAlertFailedLogin(false), 10000)
+          return;
+        }
+        navigate("/", {replace: true})
+        loginSuccessPromise()
+        return res.data
+      })
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  const closeLabelError = () => {
+    setShowLabelError(false)
+    clearState()
+  }
+
+  const clearState = () => {
+    setTimeout(() => {
+      setShowLabelError(true)
+    }, 5000)
+  }
 
   return (
     <MainContainerConnection>
       {showAlertSuccessUserCreated && <AlertCard 
         text={"Votre compte a été crée, vous pouvez a présent vous connecter."}
-        icon={<SuccessIcon icon={faSmile}/>}
+        icon={<SuccessIcon color="#292D3E" icon={faSmile}/>}
         onCloseAlert={() => setShowAlertSuccessUserCreated(false)}
         isOpen={true}
       />}
-      <ContainerConnection type={"post"}>
+      {showAlertFailedLogin && <AlertCard 
+        text={"L'email ou mot de passe est incorrect."}
+        icon={<SuccessIcon color="#FF4858" icon={faFrown}/>}
+        onCloseAlert={() => setShowAlertFailedLogin(false)}
+        isOpen={true}
+        backgroundColor={"#FDD5D5"}
+        textColor={"#EE362F"}
+      />}
+      <ContainerConnection type={"post"} onSubmit={handleSubmit(onSubmit)}>
         <MainContainerItems>
           <ContainerTitle>Bienvenue,</ContainerTitle>
           <ContainerItemConnection>
-            <ContainerInput type={"email"} placeholder="Email"></ContainerInput>
-            <ContainerInput type={"password"} placeholder="Mot de passe"></ContainerInput>
+            <ContainerInput 
+               name="email"
+               type="email"
+               placeholder="Email"
+               {...register("email", {
+                 required: "Le choix d'un email est nécessaire",
+                 maxLength: limitEmailLength,
+               })}
+            />
+            {errors.email && showLabelError && <LabelError
+              text={errors?.email?.message}
+              closeLabelError={closeLabelError}
+              icon={"x"}
+            />}
+            <ContainerInput 
+              name="password"
+              type="password"
+              placeholder="Mot de passe"
+              {...register("password", {
+                required: "Le choix d'un mot de passe est nécessaire",
+              })}
+            />
+            {errors.password && showLabelError && <LabelError
+            text={errors?.password?.message}
+            closeLabelError={closeLabelError}
+            icon={"x"}
+          />}
           </ContainerItemConnection>
           <ContainerSmallText>
             <small>Pas encore inscrit ? 
@@ -126,11 +214,13 @@ const Connection = ({
           </ContainerSmallText>
           <ContainerConnectionButton>
             <Button 
+              type={"button"}
               text={"Connexion"}
               hideBorder={true}
               boxShadowIsActive={true}
               height={"40px"}
               width={"140px"}
+              disabled={isSubmitting}
             />
           </ContainerConnectionButton>
         </MainContainerItems>

@@ -92,6 +92,33 @@ router.post('/createUser', (req, res) => {
   })
 });
 
+router.post('/login', (req, res) => {
+  if(!req.body.email || !req.body.password) {
+    res.json({ success: false, error: "Missing parameters" })
+    return;
+  }
+  User.findOne({
+    email: req.body.email
+  }).then(user => {
+    if(!user) {
+      console.log("pas user")
+      res.json({ success: false, error: "User does not exist"})
+    } else {
+      if(!Bcrypt.compareSync(req.body.password, user.password)) {
+        console.log("mauvais mdp")
+        res.json({ success: false, error: "Wrong password"})
+      } else {
+        const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE)
+        console.log("inscription réussie")
+        res.json({ success: true, token: token})
+      }
+    }
+  }).catch(err => {
+    console.log("erreur")
+    res.json({ success: false, error: err})
+  })
+});
+
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
 });

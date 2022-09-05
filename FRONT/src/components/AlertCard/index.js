@@ -14,12 +14,16 @@ const AlertCard = ({
   icon,
   text,
   onCloseAlert,
+  backgroundColor,
+  textColor,
 }) => {
-
 
   return (
     <ContainerAlerteUpdateSuccess>
-      <AlerteUpdateSuccess>
+      <AlerteUpdateSuccess 
+        backgroundColor={backgroundColor}
+        textColor={textColor}
+      >
         <ContainerIcon icon={icon}>
           {icon}
         </ContainerIcon>
@@ -35,6 +39,10 @@ const AlertCard = ({
       </AlerteUpdateSuccess>
     </ContainerAlerteUpdateSuccess>
   )
+}
+
+AlertCard.defaultProps = {
+  backgroundColor: "#FFFFFF",
 }
 
 export default AlertCard

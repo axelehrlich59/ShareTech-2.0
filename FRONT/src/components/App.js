@@ -29,10 +29,16 @@ const MainContainer = styled.div`
 `
 
 function App() {
+
+  // SUCCESS STATES
   const [showAlertSuccessUpdate, setshowAlertSuccessUpdate] = useState(false)
   const [showAlertSuccessPost, setShowAlertSuccessPost] = useState(false)
   const [showAlertSuccessDelete, setShowAlertSuccessDelete] = useState(false)
   const [showAlertSuccessUserCreated, setShowAlertSuccessUserCreated] = useState(false)
+  const [showAlertSuccessLogin, setShowAlertSuccessLogin] = useState(false)
+
+  // FAILED STATES 
+  const [showAlertFailedLogin, setShowAlertFailedLogin] = useState(false)
 
   return (
     <>
@@ -47,6 +53,8 @@ function App() {
               setShowAlertSuccessPost={setShowAlertSuccessPost}
               showAlertSuccessDelete={showAlertSuccessDelete}
               setShowAlertSuccessDelete={setShowAlertSuccessDelete}
+              showAlertSuccessLogin={showAlertSuccessLogin}
+              setShowAlertSuccessLogin={setShowAlertSuccessLogin}
             />} exact
             />
             <Route path="/AboutUs" element={<About />} />
@@ -57,6 +65,10 @@ function App() {
             <Route path="/Connexion" element={<Connection 
               showAlertSuccessUserCreated={showAlertSuccessUserCreated}
               setShowAlertSuccessUserCreated={setShowAlertSuccessUserCreated}
+              showAlertSuccessLogin={showAlertSuccessLogin}
+              setShowAlertSuccessLogin={setShowAlertSuccessLogin}
+              showAlertFailedLogin={showAlertFailedLogin}
+              setShowAlertFailedLogin={setShowAlertFailedLogin}
             />} />
             <Route path="/Inscription" element={<Inscription 
               setShowAlertSuccessUserCreated={setShowAlertSuccessUserCreated}

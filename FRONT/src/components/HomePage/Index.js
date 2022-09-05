@@ -75,6 +75,8 @@ const HomePage = ({
   setShowAlertSuccessPost,
   showAlertSuccessDelete,
   setShowAlertSuccessDelete,
+  showAlertSuccessLogin,
+  setShowAlertSuccessLogin,
 }) => {
 
   const [articles, setArticles] = useState([])
@@ -139,6 +141,12 @@ const HomePage = ({
         text={"La suppression de votre article s'est déroulée avec succès"}
         icon={<SuccessIcon icon={faSmile}/>}
         onCloseAlert={() => setShowAlertSuccessDelete(false)}
+        isOpen={true}
+      />}
+      {showAlertSuccessLogin && <AlertCard 
+        text={"Vous êtes a présent connecté, vous pouvez maintenant publier des articles."}
+        icon={<SuccessIcon icon={faSmile}/>}
+        onCloseAlert={() => setShowAlertSuccessLogin(false)}
         isOpen={true}
       />}
       {articles.length === 0 ? <>

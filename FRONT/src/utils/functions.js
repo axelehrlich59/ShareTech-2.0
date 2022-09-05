@@ -4,6 +4,6 @@ export const featureNotAvailableYet = () => {
 
 export const promiseSuccessAlert = () => {
   let promise = new Promise((resolve, reject) => {
-    setTimeout(() => resolve("Article modifié !"), 1000)
+    setTimeout(() => resolve("Success"), 1000)
   });
 }
