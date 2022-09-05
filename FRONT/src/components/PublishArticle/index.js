@@ -33,7 +33,6 @@ const HidePublicationContainer = styled.div`
   width: 100%;
 `
 
-
 const PublishArticle = ({
   setShowAlertSuccessPost,
 }) => {
@@ -81,7 +80,6 @@ const PublishArticle = ({
     setArticleText("")
   }
   
-   
 
   return (
     <>

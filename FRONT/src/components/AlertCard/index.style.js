@@ -18,14 +18,14 @@ export const textAppear = keyframes`
 export const ContainerAlerteUpdateSuccess = styled.div`
   display: flex;
   width: 100%;
-  height: 15%;
+  height: 20%;
   justify-content: center;
   align-items: center;
 `
 export const AlerteUpdateSuccess = styled.div`
   display: flex;
   width: 30%;
-  height: 60%;
+  height: 80%;
   align-items: center;
   border-radius: 5px;
   border: 2px solid #292D3E;
@@ -60,7 +60,7 @@ export const ContainerCloseIcon = styled.div`
   height: 100%;
 `
 export const CloseAlertIcon = styled(FontAwesomeIcon)`
-  font-size: 18px;
+  font-size: 20px;
   margin-top: 3px;
   margin-right: 6px;
   cursor: pointer;

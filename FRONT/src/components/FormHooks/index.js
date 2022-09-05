@@ -1,8 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom"
 import styled from 'styled-components'
 import Button from "../Button/Index.js";
 import { useForm } from "react-hook-form";
 import LabelError from "../LabelErrorMessage";
+import axios from 'axios';
+import { promiseSuccessAlert } from '../../utils/functions.js';
 
 const ContainerInscription = styled.form`
   display: flex;
@@ -69,9 +72,12 @@ const ContainerConnectionButton = styled.div`
 `
 
 
-const FormHooks = () => {
+const FormHooks = ({
+  setShowAlertSuccessUserCreated,
+}) => {
 
   const [showLabelError, setShowLabelError] = useState(true)
+  const navigate = useNavigate()
 
   const limitSizeCharacters = 30
   const limitEmailLength = 320
@@ -82,11 +88,27 @@ const FormHooks = () => {
   const {register, handleSubmit, formState} = useForm()
   const {isSubmitting, errors} = formState
 
-  const onSubmit = async(data) => {
-    waitForResponse(2000)
+  const successAlertUserCreated = () => {
+    promiseSuccessAlert()
+    setShowAlertSuccessUserCreated(true)
+    setTimeout(() => setShowAlertSuccessUserCreated(false), 10000)
   }
 
-  
+  const onSubmit = async(dataToInsert) => {
+    waitForResponse(2000)
+    if(Object.keys(dataToInsert).length === 0 || Object.keys(errors).length !== 0) return;
+    try {
+      axios.post('http://localhost:8000/createUser', dataToInsert, {
+      withCredentials: true
+      })
+      .then(() => 
+        navigate("/Connexion", {replace: true},
+        successAlertUserCreated()
+      ))
+    } catch(error) {
+      console.log(error)
+    }
+  }
 
   const waitForResponse = (duration = 1000) => {
     return new Promise((resolve) => {
@@ -105,7 +127,7 @@ const FormHooks = () => {
     }, 5000)
   }
 
-  console.log('errors ===== ', errors)
+
 
   return (
     <ContainerInscription type={"post"} onSubmit={handleSubmit(onSubmit)}>

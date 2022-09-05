@@ -32,6 +32,7 @@ function App() {
   const [showAlertSuccessUpdate, setshowAlertSuccessUpdate] = useState(false)
   const [showAlertSuccessPost, setShowAlertSuccessPost] = useState(false)
   const [showAlertSuccessDelete, setShowAlertSuccessDelete] = useState(false)
+  const [showAlertSuccessUserCreated, setShowAlertSuccessUserCreated] = useState(false)
 
   return (
     <>
@@ -53,9 +54,15 @@ function App() {
               setShowAlertSuccessPost={setShowAlertSuccessPost}
             />} />
             <Route path="/Profil" element={<Profil />} />
-            <Route path="/Connexion" element={<Connection />} />
-            <Route path="/Inscription" element={<Inscription />} />
+            <Route path="/Connexion" element={<Connection 
+              showAlertSuccessUserCreated={showAlertSuccessUserCreated}
+              setShowAlertSuccessUserCreated={setShowAlertSuccessUserCreated}
+            />} />
+            <Route path="/Inscription" element={<Inscription 
+              setShowAlertSuccessUserCreated={setShowAlertSuccessUserCreated}
+            />} />
             <Route path="/ArticleUpdate/:id" element={<UpdateArticle
+              showAlertSuccessDelete={showAlertSuccessDelete}
               setshowAlertSuccessUpdate={setshowAlertSuccessUpdate}
             />}/> 
           </Routes>

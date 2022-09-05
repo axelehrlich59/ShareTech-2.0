@@ -80,11 +80,15 @@ const ContainerConnectionButton = styled.div`
 `
 
 
-const Inscription = () => {
+const Inscription = ({
+  setShowAlertSuccessUserCreated,
+}) => {
 
   return (
     <MainContainerInscription>
-      <FormHooks/>
+      <FormHooks 
+        setShowAlertSuccessUserCreated={setShowAlertSuccessUserCreated}
+      />
     </MainContainerInscription>
   )
 }

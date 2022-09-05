@@ -6,7 +6,7 @@ import ArticleDisplay from "../ArticleDisplay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFrown, faSmile } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate, useLocation } from "react-router-dom"
-import CardSuccess from "../CardSuccess";
+import AlertCard from "../AlertCard";
 import axios from "axios";
 import { promiseSuccessAlert } from "../../utils/functions";
 
@@ -123,19 +123,19 @@ const HomePage = ({
 
   return (
     <>
-      {showAlertSuccessUpdate && <CardSuccess 
+      {showAlertSuccessUpdate && <AlertCard 
         text={"La modification de l'article a bien été prise en compte"}
         icon={<SuccessIcon icon={faSmile}/>}
         onCloseAlert={() => setshowAlertSuccessUpdate(false)}
         isOpen={true}
       />}
-      {showAlertSuccessPost && <CardSuccess 
+      {showAlertSuccessPost && <AlertCard 
         text={"La publication de votre article s'est déroulée avec succès"}
         icon={<SuccessIcon icon={faSmile}/>}
         onCloseAlert={() => setShowAlertSuccessPost(false)}
         isOpen={true}
       />}
-      {showAlertSuccessDelete && <CardSuccess 
+      {showAlertSuccessDelete && <AlertCard 
         text={"La suppression de votre article s'est déroulée avec succès"}
         icon={<SuccessIcon icon={faSmile}/>}
         onCloseAlert={() => setShowAlertSuccessDelete(false)}

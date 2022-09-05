@@ -2,6 +2,8 @@ console.clear()
 const express = require("express")
 const app = express();
 const cors = require("cors")
+const JsonWebToken = require("jsonwebtoken")
+const Bcrypt = require("bcryptjs");
 
 const corsOptions = {
   origin: "http://localhost:4200", 
@@ -24,6 +26,8 @@ app.use(express.json())
 app.use(router)
 
 
+const SECRET_JWT_CODE = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY2MjEzMjQ5NiwiaWF0IjoxNjYyMTMyNDk2fQ.Ddg98T4iV8GxqX4AC6Bjk1LWb0B4iV8Ey1fQqjGRXOk"
+
 var schemaArticle = new Schema({
   id: String,
   text: String,
@@ -31,11 +35,33 @@ var schemaArticle = new Schema({
   collection: 'articles'
 });
 
+var schemaUser = new Schema({
+  id: String,
+  username: { 
+    type: String, 
+    required: true 
+  },
+  password: { 
+    type: String, 
+    required: true 
+  },
+  email: {
+    type: String, 
+    required: true, 
+    unique: true
+  },
+}, {
+  collection: 'users'
+});
+
 var Model = mongoose.model('Model', schemaArticle)
 
 const ArticleModel = mongoose.model('Article', {
   text: { type: String }
 })
+
+const User = mongoose.model('Users', schemaUser)
+
 
 router.post('/stored', (req, res) => {
   try {
@@ -46,6 +72,24 @@ router.post('/stored', (req, res) => {
     console.log(err)
     return res.status(500).send()
   }
+});
+
+router.post('/createUser', (req, res) => {
+  if(!req.body.email || !req.body.password) {
+    res.json({ success: false, error: "Missing parameters" })
+    return;
+  }
+
+  User.create({
+    username: req.body.username,
+    email: req.body.email,
+    password: Bcrypt.hashSync(req.body.password, 10)
+  }).then(user => {
+    const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE)
+    res.json({ success: true, token: token})
+  }).catch(err => {
+    res.json({ success: false, error: err})
+  })
 });
 
 router.get("/", (req, res) => {

@@ -10,7 +10,7 @@ import {
 } from "./index.style"
 
 
-const CardSuccess = ({
+const AlertCard = ({
   icon,
   text,
   onCloseAlert,
@@ -37,4 +37,4 @@ const CardSuccess = ({
   )
 }
 
-export default CardSuccess
+export default AlertCard

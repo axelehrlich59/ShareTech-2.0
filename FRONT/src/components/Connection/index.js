@@ -3,11 +3,15 @@ import styled from 'styled-components'
 import Button from "../Button/Index";
 import { Link } from "react-router-dom";
 import backgroundImg from "../../assets/educational-bg.jpg"
+import AlertCard from "../AlertCard";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFrown, faSmile } from "@fortawesome/free-solid-svg-icons";
 
 const MainContainerConnection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   width: 100%;
   height: 92%;
   font-family: 'DM Sans';
@@ -87,12 +91,27 @@ const LinkToInscription = styled(Link)`
   font-weight: bold;
   color: black;
 `
+const SuccessIcon = styled(FontAwesomeIcon)`
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  color: #292D3E;
+`
 
 
-const Connection = () => {
+const Connection = ({
+  showAlertSuccessUserCreated,
+  setShowAlertSuccessUserCreated,
+}) => {
 
   return (
     <MainContainerConnection>
+      {showAlertSuccessUserCreated && <AlertCard 
+        text={"Votre compte a été crée, vous pouvez a présent vous connecter."}
+        icon={<SuccessIcon icon={faSmile}/>}
+        onCloseAlert={() => setShowAlertSuccessUserCreated(false)}
+        isOpen={true}
+      />}
       <ContainerConnection type={"post"}>
         <MainContainerItems>
           <ContainerTitle>Bienvenue,</ContainerTitle>
