@@ -63,10 +63,10 @@ const PublishArticle = ({
       axios.post('http://localhost:8000/stored', dataToInsert, {
       withCredentials: true
       })
-      .then(() => 
+      .then(() => {
         postArticleSuccessPromise(),
-        navigate("/", {replace: true}
-      ))
+        navigate("/", {replace: true})
+      })
     } catch(error) {
       console.log(error)
     }

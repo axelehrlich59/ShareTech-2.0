@@ -21,6 +21,11 @@ export const ContainerAlerteUpdateSuccess = styled.div`
   height: 20%;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 720px) {
+    font-size: 14px;
+    width: auto;
+    height: 70%;
+  }
 `
 export const AlerteUpdateSuccess = styled.div`
   display: flex;
@@ -35,6 +40,10 @@ export const AlerteUpdateSuccess = styled.div`
   animation-fill-mode: both;
   animation-duration: 2s;
   animation-iteration-count: 1;
+  @media screen and (max-width: 720px) {
+    width: 500px;
+    padding: 15px;
+  }
 `
 export const ContainerIcon = styled.div`
   display: flex;
@@ -42,6 +51,9 @@ export const ContainerIcon = styled.div`
   height: 100%;
   justify-content: right;
   align-items: center;
+  @media screen and (max-width: 720px) {
+    display: none;
+  }
 `
 export const ContainerAlertMessage = styled.div`
   display: flex;
@@ -53,12 +65,18 @@ export const ContainerAlertMessage = styled.div`
   animation-name: ${textAppear};
   animation-duration: 3s;
   animation-delay: 0s;
+  @media screen and (max-width: 720px) {
+    width: 100%;
+  }
 `
 export const ContainerCloseIcon = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 10%;
   height: 100%;
+  @media screen and (max-width: 720px) {
+    width: 15%;
+  }
 `
 export const CloseAlertIcon = styled(FontAwesomeIcon)`
   font-size: 20px;

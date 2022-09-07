@@ -77,6 +77,8 @@ const HomePage = ({
   setShowAlertSuccessDelete,
   showAlertSuccessLogin,
   setShowAlertSuccessLogin,
+  showAlertUnauthorizedDelete,
+  setShowAlertUnauthorizedDelete
 }) => {
 
   const [articles, setArticles] = useState([])
@@ -104,19 +106,29 @@ const HomePage = ({
   }, []);  
 
   const onDeleteArticle = (id) => {
-    fetch(`http://localhost:8000/delete/${id}`, {
-      method: 'DELETE',
-    })
-    .then((res) => 
-      res.text(),
-      deleteArticleSuccessPromise(),
-      setArticles(
-        articles.filter(article => {
-          return article._id !== id
-        })
-      )
-    )
-    .then(res => console.log(res))
+    try {
+      axios.request({
+        url: `http://localhost:8000/delete/${id}`,
+        method: "delete",
+        withCredentials: true,
+    }).catch(error => {
+      if([401].includes(error.response.status)) {
+        setShowAlertUnauthorizedDelete(true)
+        setTimeout(() => setShowAlertUnauthorizedDelete(false), 10000)
+        return;
+      }
+    }).then((res) => {
+        if(res.status === 200) {
+          deleteArticleSuccessPromise(),
+          setArticles(
+            articles.filter(article => {
+              return article._id !== id
+            })
+          )}
+        }
+    )} catch(error) {
+        console.log("error ==== ", error)
+    }
   }
 
   const onModificationArticlePage = (id, text) => {
@@ -149,12 +161,22 @@ const HomePage = ({
         onCloseAlert={() => setShowAlertSuccessLogin(false)}
         isOpen={true}
       />}
+      {showAlertUnauthorizedDelete && <AlertCard 
+        text={"Vous n'êtes pas autorisé à supprimer cet article."}
+        icon={<SuccessIcon icon={faFrown}/>}
+        onCloseAlert={() => setShowAlertUnauthorizedDelete(false)}
+        isOpen={true}
+        backgroundColor={"#FDD5D5"}
+        textColor={"#EE362F"}
+      />}
       {articles.length === 0 ? <>
         <MainContainerArticlesPublished>
           <ArticleDisplay 
             text={firstArticleText}
             username={"Admin"}
             profilePicture={TokyoNight}
+            onDeleteArticle={() => alert("Vous ne pouvez pas suppprimer cet article, il s'agit d'un exemple")}
+            onModificationArticlePage={() => alert("Vous ne pouvez pas modifier cet article, il s'agit d'un exemple")}
           />
         </MainContainerArticlesPublished> : 
         <MainContainerArticlesPublished>
@@ -162,6 +184,8 @@ const HomePage = ({
             text={secondArticleText}
             username={"Admin"}
             profilePicture={TokyoNight}
+            onDeleteArticle={() => alert("Vous ne pouvez pas suppprimer cet article, il s'agit d'un exemple")}
+            onModificationArticlePage={() => alert("Vous ne pouvez pas modifier cet article, il s'agit d'un exemple")}
           />
         </MainContainerArticlesPublished>
       </> : 

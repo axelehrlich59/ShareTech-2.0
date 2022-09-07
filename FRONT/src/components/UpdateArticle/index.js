@@ -6,7 +6,9 @@ import { useNavigate, useLocation } from "react-router-dom"
 import Button from "../Button/Index";
 import { promiseSuccessAlert } from "../../utils/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faFrown } from "@fortawesome/free-solid-svg-icons";
+import AlertCard from "../AlertCard";
+import axios from "axios";
 
 const MainContainerModificationArticle = styled.div`
   display: flex;
@@ -43,10 +45,18 @@ const ContainerButtons = styled.div`
   justify-content: space-around;
   align-items: center;
 `
+const SuccessIcon = styled(FontAwesomeIcon)`
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  color: #292D3E;
+`
 
 
 const UpdateArticle = ({
   setshowAlertSuccessUpdate,
+  showAlertUnauthorizedUpdate,
+  setShowAlertUnauthorizedUpdate,
 }) => {
 
   const location = useLocation()
@@ -68,14 +78,11 @@ const UpdateArticle = ({
     const dataToSend = {
       text: originalArticle
     }
-    fetch(`http://localhost:8000/update/${id}`, {
-      method: 'PUT',
-      body: JSON.stringify(dataToSend),
-      headers: {
-        'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin" : "*", 
-        "Access-Control-Allow-Credentials" : true,
-      },
+    axios.request({
+      url: `http://localhost:8000/update/${id}`,
+      method: "PUT",
+      withCredentials: true,
+      data: dataToSend,
     }).then(res => {
       navigate("/", {replace: true})
       updateArticleSuccessPromise()
@@ -83,12 +90,25 @@ const UpdateArticle = ({
     })
     .catch(err => {
       console.log("Error Reading data " + err);
-    });
+      if([401].includes(err.response.status)) {
+        setShowAlertUnauthorizedUpdate(true)
+        setTimeout(() => setShowAlertUnauthorizedUpdate(false), 10000)
+        return;
+      }
+    })
   }
 
   return (
     <>
       <MainContainerModificationArticle>
+        {showAlertUnauthorizedUpdate && <AlertCard 
+          text={"Vous n'êtes pas autorisé à modifier cet article."}
+          icon={<SuccessIcon icon={faFrown}/>}
+          onCloseAlert={() => setShowAlertUnauthorizedUpdate(false)}
+          isOpen={true}
+          backgroundColor={"#FDD5D5"}
+          textColor={"#EE362F"}
+        />}
         <PublicationArticleTextArea 
           rows={20}
           cols={100}

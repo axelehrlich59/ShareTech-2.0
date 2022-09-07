@@ -16,15 +16,24 @@ const NavItem = styled.div`
     height: 50px;
     font-size: 18px;  
   }
-  color: black;
+  color: ${({color}) => color};
 `
 
 const NavbarItem = ({
   text,
+  color,
+  onClick,
 }) => {
   return (
-    <NavItem>{text}</NavItem>
+    <NavItem 
+      color={color}
+      onClick={onClick}
+    >{text}</NavItem>
   )
+}
+
+NavbarItem.defaultProps = {
+  color: "black",
 }
 
 export default NavbarItem

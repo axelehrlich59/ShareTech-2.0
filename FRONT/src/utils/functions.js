@@ -7,3 +7,7 @@ export const promiseSuccessAlert = () => {
     setTimeout(() => resolve("Success"), 1000)
   });
 }
+
+export const checkTokenExist = (token) => {
+  return token === undefined || token === null ? false : true
+}

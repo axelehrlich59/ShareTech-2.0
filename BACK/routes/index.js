@@ -2,8 +2,11 @@ console.clear()
 const express = require("express")
 const app = express();
 const cors = require("cors")
+const Cookies = require( "cookies" );
 const JsonWebToken = require("jsonwebtoken")
 const Bcrypt = require("bcryptjs");
+// const functions = require("../utils/functions")
+ const {fetchUserByToken} = require("../utils/functions.js");
 
 const corsOptions = {
   origin: "http://localhost:4200", 
@@ -26,7 +29,7 @@ app.use(express.json())
 app.use(router)
 
 
-const SECRET_JWT_CODE = "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY2MjEzMjQ5NiwiaWF0IjoxNjYyMTMyNDk2fQ.Ddg98T4iV8GxqX4AC6Bjk1LWb0B4iV8Ey1fQqjGRXOk"
+const SECRET_JWT_CODE = "5fa4b7ed3f99620da6cc6e95d73bc1784af801c2";
 
 var schemaArticle = new Schema({
   id: String,
@@ -63,7 +66,7 @@ const ArticleModel = mongoose.model('Article', {
 const User = mongoose.model('Users', schemaUser)
 
 
-router.post('/stored', (req, res) => {
+router.post('/stored', fetchUserByToken, (req, res) => {
   try {
     db.collection('articles').insertOne(req.body, (err, data) => {
       if(err) console.log(err);
@@ -108,8 +111,8 @@ router.post('/login', (req, res) => {
         console.log("mauvais mdp")
         res.json({ success: false, error: "Wrong password"})
       } else {
-        const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE)
-        console.log("inscription réussie")
+        const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE, {expiresIn: 604800})
+        new Cookies(req,res).set('access_token', token, {httpOnly: false, secure: false });
         res.json({ success: true, token: token})
       }
     }
@@ -119,15 +122,20 @@ router.post('/login', (req, res) => {
   })
 });
 
+
 router.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
+});
+
+router.get("/logout", fetchUserByToken, (req,res)=>{
+  res.status(202).clearCookie('access_token').send('cookie cleared')
 });
 
 router.get('/success', function (req, res) {
   res.sendFile(path.join(__dirname, "../FRONT/public", "index.html"));
 })
 
-router.put('/update/:id', (req, res) => {
+router.put('/update/:id', fetchUserByToken, (req, res) => {
   ArticleModel.updateOne({_id: req.params.id}, {$set:{text: req.body.text}}).then(
     () => {
       res.status(201).json({
@@ -143,15 +151,15 @@ router.put('/update/:id', (req, res) => {
   );
 });
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', fetchUserByToken, (req, res) => {
   var articleId = String(req.params.id);
-  
   ArticleModel.findByIdAndDelete(articleId, (err, doc) => {
       if (err) return res.status(500).json(err);
 
       if (doc === null) {
         return res.status(404).json({ message: 'Article inconnu' })
       }
+
       const response = {
         message: "Article is deleted to db",
         id: articleId

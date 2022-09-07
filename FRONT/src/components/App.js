@@ -36,6 +36,8 @@ function App() {
   const [showAlertSuccessDelete, setShowAlertSuccessDelete] = useState(false)
   const [showAlertSuccessUserCreated, setShowAlertSuccessUserCreated] = useState(false)
   const [showAlertSuccessLogin, setShowAlertSuccessLogin] = useState(false)
+  const [showAlertUnauthorizedDelete, setShowAlertUnauthorizedDelete] = useState(false)
+  const [showAlertUnauthorizedUpdate, setShowAlertUnauthorizedUpdate] = useState(false)
 
   // FAILED STATES 
   const [showAlertFailedLogin, setShowAlertFailedLogin] = useState(false)
@@ -55,6 +57,8 @@ function App() {
               setShowAlertSuccessDelete={setShowAlertSuccessDelete}
               showAlertSuccessLogin={showAlertSuccessLogin}
               setShowAlertSuccessLogin={setShowAlertSuccessLogin}
+              showAlertUnauthorizedDelete={showAlertUnauthorizedDelete}
+              setShowAlertUnauthorizedDelete={setShowAlertUnauthorizedDelete}
             />} exact
             />
             <Route path="/AboutUs" element={<About />} />
@@ -76,6 +80,8 @@ function App() {
             <Route path="/ArticleUpdate/:id" element={<UpdateArticle
               showAlertSuccessDelete={showAlertSuccessDelete}
               setshowAlertSuccessUpdate={setshowAlertSuccessUpdate}
+              showAlertUnauthorizedUpdate={showAlertUnauthorizedUpdate}
+              setShowAlertUnauthorizedUpdate={setShowAlertUnauthorizedUpdate}
             />}/> 
           </Routes>
         </Router>

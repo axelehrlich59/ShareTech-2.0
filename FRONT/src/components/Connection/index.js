@@ -116,8 +116,6 @@ const Connection = ({
   const {register, handleSubmit, formState} = useForm()
   const {isSubmitting, errors} = formState
 
-  const [inscriptionFormValue, setInscriptionFormValue] = useState({})
-
   const limitEmailLength = 320
 
 

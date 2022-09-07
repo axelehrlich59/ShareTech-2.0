@@ -3,13 +3,16 @@ import styled from 'styled-components'
 import Logo from "../../assets/network.png"
 import Button from "../Button/Index";
 import NavbarItem from "./NavbarItem";
-import { Link, useLocation  } from "react-router-dom";
+import { Link, useLocation, useNavigate  } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import Cookies from 'js-cookie';
+import { checkTokenExist } from "../../utils/functions";
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: black;
+  color: ${({linkcolor}) => linkcolor};
   &:focus, &:hover, &:visited, &:link, &:active {
     text-decoration: none;
   }
@@ -36,7 +39,7 @@ const SectionContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 95%;
   color: black;
   font-size: 19px;
   @media (min-width: 768px) and (max-width: 1024px) {
@@ -124,17 +127,28 @@ const TextLogo = styled.div`
 
 
 const Navbar = ({
-
+  linkcolor,
 }) => {
-
+  const tokenFromCookies = Cookies.get('access_token')
+  const isUserConnected = checkTokenExist(tokenFromCookies)
+  
   const [showBurgerMenu, setShowBurgerMenu] = useState(false)
   const location = useLocation();
+  const navigate = useNavigate();
 
   const onClickBurgerIcon = () => {
     setShowBurgerMenu(previousState => !previousState)
   }
 
-
+  const logout = () => {
+    axios.request({
+      url: `http://localhost:8000/logout`,
+      method: "get",
+      withCredentials: true,
+    }).then(() => {
+        navigate("/", {replace: true})
+    })
+  }
 
   return (
     <>
@@ -148,13 +162,16 @@ const Navbar = ({
             <StyledLink className="styledLink" to="/AboutUs">
               <NavbarItem text={"A propos"}/>
             </StyledLink>
-            <StyledLink className="styledLink" to="/Post">
+            {isUserConnected && <StyledLink className="styledLink" to="/Post">
               <NavbarItem text={"Publier"}/>
-            </StyledLink>
-            <StyledLink className="styledLink" to="/Profil">
+            </StyledLink>}
+            {isUserConnected && <StyledLink className="styledLink" to="/Profil">
               <NavbarItem text={"Profil"} />
-            </StyledLink>
-            <StyledLinkButton to="/Connexion">
+            </StyledLink>}
+            {isUserConnected && <NavbarItem color={"red"} text={"Déconnexion"} 
+              onClick={logout}
+            />}
+            {!isUserConnected && <StyledLinkButton to="/Connexion">
               {location.pathname !== "/Connexion" && <Button
                 text={"Connexion"}
                 backgroundColor={"#FFFFFF"}
@@ -163,8 +180,8 @@ const Navbar = ({
                 width={"120px"}
                 hideBorder={true}
               />}
-            </StyledLinkButton>
-            <StyledLinkButton to="/Inscription">
+            </StyledLinkButton>}
+            {!isUserConnected && <StyledLinkButton to="/Inscription">
               <Button
                 text={"Inscription"}
                 backgroundColor={"#292D3E"}
@@ -174,7 +191,7 @@ const Navbar = ({
                 height={"35px"}
                 width={"120px"}
               />
-            </StyledLinkButton>
+            </StyledLinkButton>}
           </NavItemsContainer>
         </SectionContent>
         <BurgerIcon>
@@ -183,24 +200,34 @@ const Navbar = ({
       </NavbarTop>
       {showBurgerMenu && <BurgerMenuContainer>
         <BurgerMenuItems>
-          <StyledLink to="/AboutUs">A propos</StyledLink>
+          <StyledLink linkcolor={"black"} to="/AboutUs">A propos</StyledLink>
+        </BurgerMenuItems>
+        {isUserConnected && <BurgerMenuItems>
+          <StyledLink linkcolor={"black"} to="/Post">Publier</StyledLink>
+        </BurgerMenuItems>}
+        {isUserConnected && <BurgerMenuItems>
+          <StyledLink linkcolor={"black"} to="/Profil">Profil</StyledLink>
+        </BurgerMenuItems>}
+        <BurgerMenuItems>
+          <StyledLink linkcolor={"black"} to="/Connexion">Connexion</StyledLink>
         </BurgerMenuItems>
         <BurgerMenuItems>
-          <StyledLink to="/Post">Publier</StyledLink>
+          <StyledLink linkcolor={"black"} to="/Inscription">Inscription</StyledLink>
         </BurgerMenuItems>
-        <BurgerMenuItems>
-          <StyledLink to="/Profil">Profil</StyledLink>
-        </BurgerMenuItems>
-        <BurgerMenuItems>
-          <StyledLink to="/Connexion">Connexion</StyledLink>
-        </BurgerMenuItems>
-        <BurgerMenuItems>
-          <StyledLink to="/Inscription">Inscription</StyledLink>
-        </BurgerMenuItems>
-        
+        {isUserConnected && <BurgerMenuItems>
+          <StyledLink 
+            to="/"
+            onClick={logout}
+            linkcolor={"red"}
+          >Deconnexion</StyledLink>
+        </BurgerMenuItems>}
       </BurgerMenuContainer>}
     </>
   )
+}
+
+Navbar.defaultProps = {
+  linkcolor: "#000000",
 }
 
 export default Navbar
