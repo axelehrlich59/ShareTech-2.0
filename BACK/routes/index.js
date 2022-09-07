@@ -5,7 +5,8 @@ const cors = require("cors")
 const Cookies = require( "cookies" );
 const JsonWebToken = require("jsonwebtoken")
 const Bcrypt = require("bcryptjs");
-// const functions = require("../utils/functions")
+const {schemaArticle, Model, ArticleModel} = require("../Models/articles.js")
+const {User} = require('../Models/users.js')
  const {fetchUserByToken} = require("../utils/functions.js");
 
 const corsOptions = {
@@ -14,57 +15,20 @@ const corsOptions = {
   optionSuccessStatus:200,
 }
 
-const mongoose = require("mongoose")
-
 const router = express.Router()
+const mongoose = require("mongoose")
 const db = mongoose.connection;
-var Schema = mongoose.Schema;
+
 
 const port = 8000
 
 app.use(cors(corsOptions))
-
 app.use(express.urlencoded({extended: true}));
 app.use(express.json())
 app.use(router)
 
 
 const SECRET_JWT_CODE = "5fa4b7ed3f99620da6cc6e95d73bc1784af801c2";
-
-var schemaArticle = new Schema({
-  id: String,
-  text: String,
-}, {
-  collection: 'articles'
-});
-
-var schemaUser = new Schema({
-  id: String,
-  username: { 
-    type: String, 
-    required: true 
-  },
-  password: { 
-    type: String, 
-    required: true 
-  },
-  email: {
-    type: String, 
-    required: true, 
-    unique: true
-  },
-}, {
-  collection: 'users'
-});
-
-var Model = mongoose.model('Model', schemaArticle)
-
-const ArticleModel = mongoose.model('Article', {
-  text: { type: String }
-})
-
-const User = mongoose.model('Users', schemaUser)
-
 
 router.post('/stored', fetchUserByToken, (req, res) => {
   try {
