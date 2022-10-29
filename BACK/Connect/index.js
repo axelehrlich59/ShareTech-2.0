@@ -4,9 +4,8 @@ console.clear()
 const username = "yaaz";
 const password = "root";
 const cluster = "sharetech";
-const dbName = "ShareTech";
 
-const mongoURL = `mongodb+srv://yaaz:${password}@sharetech.4lksj.mongodb.net/?retryWrites=true&w=majority`
+const mongoURL = `mongodb+srv://${username}:${password}@${cluster}.4lksj.mongodb.net/?retryWrites=true&w=majority`
 
 mongoose.connect(mongoURL, 
   {

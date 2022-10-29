@@ -9,7 +9,6 @@ function fetchUserByToken(req, res, next) {
 
   JsonWebToken.verify(token, SECRET_JWT_CODE, (err, dataJwt) => { 
     if(err) return res.sendStatus(403);
-    console.log("SUCCESS !!!")
     next();
   });
 }

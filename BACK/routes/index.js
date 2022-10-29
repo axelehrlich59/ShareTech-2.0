@@ -5,9 +5,10 @@ const cors = require("cors")
 const Cookies = require( "cookies" );
 const JsonWebToken = require("jsonwebtoken")
 const Bcrypt = require("bcryptjs");
-const {schemaArticle, Model, ArticleModel} = require("../Models/articles.js")
+const {Model, ArticleModel} = require("../Models/articles.js")
 const {User} = require('../Models/users.js')
- const {fetchUserByToken} = require("../utils/functions.js");
+const {fetchUserByToken} = require("../utils/functions.js");
+require('dotenv').config();
 
 const corsOptions = {
   origin: "http://localhost:4200", 
@@ -28,7 +29,7 @@ app.use(express.json())
 app.use(router)
 
 
-const SECRET_JWT_CODE = "5fa4b7ed3f99620da6cc6e95d73bc1784af801c2";
+
 
 router.post('/stored', fetchUserByToken, (req, res) => {
   try {
@@ -52,7 +53,7 @@ router.post('/createUser', (req, res) => {
     email: req.body.email,
     password: Bcrypt.hashSync(req.body.password, 10)
   }).then(user => {
-    const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE)
+    const token = JsonWebToken.sign({ id: user._id, email: user.email}, process.env.SECRET_JWT_CODE)
     res.json({ success: true, token: token})
   }).catch(err => {
     res.json({ success: false, error: err})
@@ -75,7 +76,7 @@ router.post('/login', (req, res) => {
         console.log("mauvais mdp")
         res.json({ success: false, error: "Wrong password"})
       } else {
-        const token = JsonWebToken.sign({ id: user._id, email: user.email}, SECRET_JWT_CODE, {expiresIn: 604800})
+        const token = JsonWebToken.sign({ id: user._id, email: user.email}, process.env.SECRET_JWT_CODE, {expiresIn: 604800})
         new Cookies(req,res).set('access_token', token, {httpOnly: false, secure: false });
         res.json({ success: true, token: token})
       }
@@ -148,6 +149,6 @@ router.get('/articles', cors(corsOptions), function(req, res) {
 
 app.listen(port, () => {
   console.log(`App is running on port ${port}`)
-  })
+})
 
 module.exports = router
