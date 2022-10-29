@@ -94,6 +94,10 @@ const About = () => {
             <FontAwesomeIconContainer icon={faArrowRight}/>
             <div>Découvrir de nouvelles fonctionalités</div> 
           </AboutMessage>
+          <AboutMessage>
+            <FontAwesomeIconContainer icon={faArrowRight}/>
+            <div>Publier des articles courts, mais conscis !</div> 
+          </AboutMessage>
         </AboutMessageBodyContainer>
       </AboutMessageContainer>
     </AboutMainContainer>
