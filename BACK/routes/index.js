@@ -1,6 +1,7 @@
 console.clear()
 const express = require("express")
 const app = express();
+require('dotenv').config()
 const cors = require("cors")
 const Cookies = require( "cookies" );
 const JsonWebToken = require("jsonwebtoken")
@@ -8,7 +9,6 @@ const Bcrypt = require("bcryptjs");
 const {Model, ArticleModel} = require("../Models/articles.js")
 const {User} = require('../Models/users.js')
 const {fetchUserByToken} = require("../utils/functions.js");
-require('dotenv').config();
 
 const corsOptions = {
   origin: "http://localhost:4200", 
